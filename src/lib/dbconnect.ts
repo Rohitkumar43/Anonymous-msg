@@ -8,7 +8,7 @@ const connection : connectionObject = {}
 
 // we have to make this fxn is async
 
-async  function dbconnect(): Promise<void> {
+export async function dbconnect(): Promise<void> {
     // Check if we have a connection to the database or if it's currently connecting
   if (connection.isConnected) {
     console.log('Already connected to the database');
