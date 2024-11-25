@@ -17,7 +17,7 @@ const messageSchema :  Schema<Message> = new Schema({
         default: Date.now
     }
 });
-// interface for the user 
+// interface for the user means the type of the ope we used in the var ....
 export interface User extends Document  {
     username: string,
     email: string,
@@ -66,7 +66,7 @@ const UserSchema :  Schema<User> = new Schema({
     },
     messages: [messageSchema]
 });
-// here we export the model and for the type safety we have to define the schema 
+// here we export the model and for the type safety we have to define the schema this is the typescript wali bimari
 const Usermodel = (mongoose.models.User as mongoose.Model<User> ) || (mongoose.model<User>("User" , UserSchema))
 
 export default Usermodel;
