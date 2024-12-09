@@ -7,7 +7,8 @@ import { allowedNodeEnvironmentFlags } from 'process';
 
 
 export async function POST(request: Request) {
-    const {username , email , password} = await request.json()
+    try {
+        const {username , email , password} = await request.json()
 
     const checkUserByUsername = await Usermodel.findOne({
         username: username,
@@ -28,7 +29,22 @@ export async function POST(request: Request) {
     const verifycode = Math.floor(100000 + Math.random() * 900000).toString
 
     if (checkUserByEmail) {
-        true // back 
+        if(checkUserByEmail.isverified){
+            return Response.json({
+                success: false,
+                message: 'email is already registerd please check ' 
+            }, {
+                status: 400
+            });
+
+        }else {
+            // new registration karwao with the passwod 
+            const hashpassword = await bcrypt.hash(password , 10)
+            checkUserByEmail.password = hashpassword;
+            checkUserByEmail.verifycode = verifycode,
+            checkUserByEmail.
+            
+        }
     } else {
         const hashpassword = await bcrypt.hash(password , 10);
         // set the expirary date for that
@@ -49,8 +65,27 @@ export async function POST(request: Request) {
 
     await newUser.save();
 
+    const emailResponse = await sendemailverfication(
+        username,
+        email,
+        verifycode
+    )
 
-    try {
+    if (!emailResponse) {
+        return Response.json({
+            success: false,
+            message: emailResponse.message
+        }, {
+            status: 500
+        });
+    }
+
+    return Response.json({
+        success: true,
+        message: "Email is registered succcesfully Now verify your email "
+    }, {
+        status: 201
+    })
         
     } catch (error) {
         console.error("there is somerhig issue in the registering" , error);
