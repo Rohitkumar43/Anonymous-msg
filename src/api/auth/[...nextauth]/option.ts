@@ -83,25 +83,8 @@ export const authOption: NextAuthOptions = {
 
     // Callbacks for modifying session and JWT
     callbacks: {
-        // Modify session to include additional user information
-        async session({ session, token }) {
-            // If token exists, add additional user details to session
-            if (token) {
-                // Add user ID to session
-                // Use type assertion to handle potential 'unknown' type
-                session.user._id = token._id as string;
-
-                // Add verification status to session
-                session.user.isVerified = token.isVerified as boolean;
-
-                // Add message acceptance status to session
-                session.user.isAcceptingMsg = token.isAcceptingMsg as boolean;
-
-                // Add username to session
-                session.user.username = token.username as string;
-            }
-            return session;
-        },
+        // jwt se user nikal lenge then send it to the token and then that toekn se seesion me store kra lenge 
+        // user ko so that badd me dikkat nah hooo
 
         // Modify JWT to include additional user information
         async jwt({ token, user }) {
@@ -112,15 +95,28 @@ export const authOption: NextAuthOptions = {
 
                 // Add verification status to token
                 token.isVerified = user.isVerified;
-
-                // Add message acceptance status to token
                 token.isAcceptingMsg = user.isAcceptingMsg;
-
-                // Add username to token
                 token.username = user.username;
             }
             return token;
-        }
+        },
+
+
+        // Modify session to include additional user information
+        async session({ session, token }) {
+            // If token exists, add additional user details to session
+            if (token) {
+                // Add user ID to session
+                // Use type assertion to handle potential 'unknown' type
+                session.user._id = token._id as string;
+                session.user.isVerified = token.isVerified as boolean;
+                session.user.isAcceptingMsg = token.isAcceptingMsg as boolean;
+                session.user.username = token.username as string;
+            }
+            return session;
+        },
+
+        
     },
 
     // Session management strategy
