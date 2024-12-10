@@ -1,81 +1,135 @@
+// Importing necessary modules and types from NextAuth and other libraries
 import { NextAuthOptions } from "next-auth";
-
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from 'bcryptjs';
-import { dbconnect } from "@/lib/dbconnect"; // to check the user in the db
+import { dbconnect } from "@/lib/dbconnect";
 import Usermodel from "@/model/User";
-import Email from "next-auth/providers/email";
-import { use } from "react";
 
+// Configuration for NextAuth authentication
 export const authOption: NextAuthOptions = {
+    // Define authentication providers
     providers: [
+        // Using Credentials Provider for email/password authentication
         CredentialsProvider({
+            // Unique identifier and name for this provider
             id: "ceredential",
             name: "ceredetials",
-            // formm where it diawplay the fxn basically html aggreagated 
+            
+            // Define the input fields for authentication
             credentials: {
-                email: { label: "Email", type: "text ", placeholder: "jsmith" },
-                password: { label: "Password", type: "password" },
+                // Email or username input field
+                email: { 
+                    label: "Email", 
+                    type: "text", 
+                    placeholder: "jsmith" 
+                },
+                // Password input field
+                password: { 
+                    label: "Password", 
+                    type: "password" 
+                },
             },
+
+            // Main authentication logic
             async authorize(credentials: any):  Promise<any> {
+                // Ensure database connection
                 await dbconnect;
+
                 try {
+                    // Find user by either email or username
                     const user = await Usermodel.findOne({
                         $or: [
                           { email: credentials.identifier },
                           { username: credentials.identifier },
                         ],
-                      });
-                      if (!user) {
+                    });
+
+                    // Check if user exists
+                    if (!user) {
                         throw new Error('No user found with this email');
-                      }
-                      if (!user.isverified) {
+                    }
+
+                    // Check if user is verified
+                    if (!user.isverified) {
                         throw new Error('Please verify your account before logging in');
-                      }
-                      // check the password is correct or not 
-                      const isPasswordCorrect = await bcrypt.compare(
+                    }
+
+                    // Verify password
+                    const isPasswordCorrect = await bcrypt.compare(
                         credentials.password,
                         user.password
-                      );
-                      if (isPasswordCorrect) {
+                    );
+
+                    // Return user if password is correct
+                    if (isPasswordCorrect) {
                         return user;
-                      } else {
+                    } else {
                         throw new Error('Incorrect password');
-                      }
+                    }
                     
                 } catch (error) {
-                    // it will throw the msg by the himself byu the fraMework 
-                    throw new Error("getting an error")
+                    // Generic error handling
+                    throw new Error("Authentication error occurred")
                 }
-
             }
         })
     ],
+
+    // Custom pages for authentication flow
     pages: {
+        // Custom sign-in page
         signIn: '/sign-in',
-        // here we can add the signout but we hVE MAKE A SEPRTATE api for that also all the fxn can be done at a single palce 
-
     },
+
+    // Callbacks for modifying session and JWT
     callbacks: {
+        // Modify session to include additional user information
         async session({ session, token }) {
-            return session
-          },
-        async jwt({ token, user}) {
+            // If token exists, add additional user details to session
+            if (token) {
+                // Add user ID to session
+                // Use type assertion to handle potential 'unknown' type
+                session.user._id = token._id as string;
 
-            // injecting all the data from the user to the token for the security
+                // Add verification status to session
+                session.user.isVerified = token.isVerified as boolean;
 
-            if(user){
-                token._id = user._id?.toString();
-                token.isverified = user.isverified
+                // Add message acceptance status to session
+                session.user.isAcceptingMsg = token.isAcceptingMsg as boolean;
 
+                // Add username to session
+                session.user.username = token.username as string;
             }
+            return session;
+        },
 
+        // Modify JWT to include additional user information
+        async jwt({ token, user }) {
+            // If user is available (during initial login), add user details to token
+            if (user) {
+                // Convert user ID to string
+                token._id = user._id?.toString();
 
+                // Add verification status to token
+                token.isVerified = user.isVerified;
 
+                // Add message acceptance status to token
+                token.isAcceptingMsg = user.isAcceptingMsg;
 
-
-
-            return token
+                // Add username to token
+                token.username = user.username;
+            }
+            return token;
         }
-    }
+    },
+
+    // Session management strategy
+    session: {
+        // Use JSON Web Token for session management
+        strategy: 'jwt',
+    },
+
+    // Secret key for token encryption
+    // Pulled from environment variables for security
+    secret: process.env.NEXTAUTH_SECRET,
 }

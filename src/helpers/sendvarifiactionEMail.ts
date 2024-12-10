@@ -1,6 +1,7 @@
 import { resend } from "@/lib/resend";
 import VerificationEmail from "../../email/emailverification";
 import { apiResponse } from "@/types/apiresponses";
+import {Message} from '@/model/User';
 
 export async function sendemailverfication(
     email: string,
@@ -14,9 +15,9 @@ export async function sendemailverfication(
             subject: 'Annoymous Msg || Verification email',
             react: VerificationEmail({username , otp: verifycode}),
           });
-        return {success: true , message: 'Email is sent succesfully '}
+        return {success: true , message: 'Email is sent succesfully ' , messages: []}
     } catch (emailerror) {
         console.error("there is something error in sending the email" , emailerror)
-        return {success: false , message: 'failed to send the verification email'}
+        return {success: false , message: 'failed to send the verification email' , messages: []}
     }
 }

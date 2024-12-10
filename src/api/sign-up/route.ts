@@ -18,7 +18,7 @@ export async function POST(request: Request) {
         return Response.json({
             success: false,
             status: 400,
-            message: 'username is not found '
+            message: 'username is not found'
         })
     }
 
