@@ -11,7 +11,7 @@ export async function POST(request: Request) {
 
   // Get the current user's session
   const session = await getServerSession(authOption);
-  const user: User = session?.user;
+  const user: User = session?.user as User;
 
   // Check if user is authenticated
   if (!session || !session.user) {
@@ -92,6 +92,7 @@ export async function GET(request: Request) {
       );
     }
 
+    // if it is found just return a response 
     // Return the user's current message acceptance status
     return Response.json(
       {
