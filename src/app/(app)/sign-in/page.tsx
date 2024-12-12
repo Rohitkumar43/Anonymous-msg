@@ -1,34 +1,68 @@
-import React from 'react';
+'use client'
+import { zodResolver } from "@hookform/resolvers/zod"
+import Link from "next/link"
+import { useEffect, useState } from "react"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
+import { useDebounceValue } from 'usehooks-ts'
+import { useToast } from "@/hooks/use-toast"
+import { useRouter } from "next/navigation"
+import { userSignupSchema } from "@/Schemas/signupSchema"
+import axios , {AxiosError} from "axios";
+import { apiResponse } from "@/types/apiresponses"
 
-interface ButtonProps {
-  label: string; // Text to display on the button
-  onClick?: () => void; // Function to call on button click
-  variant?: 'primary' | 'secondary'; // Button styles
-  disabled?: boolean; // Disable button
+
+
+const page = () => {
+ // all the states 
+  const [username, setUsername] = useState('');
+  const [usernameMessage, setUsernameMessage] = useState('');
+  const [isCheckingUsername, setIsCheckingUsername] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  // for the debouncing 
+  const debouncedUsername = useDebounceValue(username, 300);
+  const {toast} = useToast();
+  const route = useRouter();
+  // zod impelmtation
+  const form = useForm({
+    resolver: zodResolver(userSignupSchema),
+    defaultValues: {
+      username: '',
+      email: '',
+      password: ''
+    }
+  });
+
+  // check for the DOM and api call for that use useeffect
+  useEffect(() => {
+    const userNameUniqueness = async() => {
+      if (debouncedUsername) {
+        setIsCheckingUsername(true);
+        setUsernameMessage('');
+        try {
+          // http req sending 
+          const response = await axios.get(`api/check-username-validation?username=${debouncedUsername}`)
+          setUsernameMessage(response.data.message);
+
+        } catch (error) {
+          const AxiosError = error  as AxiosError<apiResponse>;
+          setUsernameMessage(
+            AxiosError.response?.data.message ?? 'Error checking in username'
+          )
+        } finally {
+          setIsCheckingUsername(false);
+        }
+      }
+    }
+
+
+  },[debouncedUsername])
+
+  return (
+    <div>
+      
+    </div>
+  )
 }
 
-const Button: React.FC<ButtonProps> = ({
-  label,
-  onClick,
-  variant = 'primary',
-  disabled = false,
-}) => {
-  return (
-    <button
-      onClick={onClick}
-      disabled={disabled}
-      className={`px-6 py-2 rounded-md text-lg font-semibold shadow-md transition-transform transform hover:scale-105 
-      ${
-        variant === 'primary'
-          ? 'bg-blue-500 text-white hover:bg-blue-600'
-          : 'bg-gray-200 text-gray-800 hover:bg-gray-300'
-      }
-      ${disabled && 'opacity-50 cursor-not-allowed'}
-      `}
-    >
-      {label}
-    </button>
-  );
-};
-
-export default Button;
+export default page
