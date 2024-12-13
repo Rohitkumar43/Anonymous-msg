@@ -6,7 +6,7 @@ export async function POST(req: Request) {
     await dbconnect();
     // as we know it annoymouns msg so anybody can send the msg so there is noneed to be logged in 
     // get the username and the content 
-    const { username, content } = await Request.json()
+    const { username, content } = await req.json()
     try {
         const user = await Usermodel.findOne(username);
         // check that the user is present or not 
