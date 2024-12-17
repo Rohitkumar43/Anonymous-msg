@@ -1,7 +1,7 @@
 import { getServerSession } from 'next-auth/next';
 import Usermodel from '@/model/User';
 import { User } from 'next-auth';
-import { authOption } from '../auth/[...nextauth]/option';
+import { authOption } from '../auth/[...nextauth]/option'
 import { dbconnect } from '@/lib/dbconnect';
 
 // POST request handler to update user's message acceptance status

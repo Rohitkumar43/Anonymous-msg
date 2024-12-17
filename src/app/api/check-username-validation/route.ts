@@ -1,37 +1,23 @@
-// HERE THE API IS DEFINED FOR THE CHECKING OF THR USERNAME UNIQUE
 import { dbconnect } from "@/lib/dbconnect";
 import { z } from 'zod';
 import Usermodel from "@/model/User";
 import { uservalidation } from '@/Schemas/signupSchema';
+import { NextRequest } from 'next/server';
 
 // Create a schema to validate username
 const checkUserSchema = z.object({ username: uservalidation });
 
-export async function GET(req: Request) {
-    // make this route where it always acess GET method only 
-    // APPLY ALL THESE IN ALL THE ROUTES 
-    if(req.method !== 'GET'){
-        return Response.json(
-            {
-                success: false,
-                message: 'ONLY GET method is allowed',
-            },
-            { status: 200 }
-        );
-
-    }
+export async function GET(req: NextRequest) {
    // Establish database connection
    await dbconnect();
 
    try {
        // Extract username from URL query parameters
        const { searchParams } = new URL(req.url);
-       const queryparams = {
-           username: searchParams.get('username')
-       }
+       const username = searchParams.get('username');
 
        // Validate username using Zod schema
-       const result = checkUserSchema.safeParse(queryparams);
+       const result = checkUserSchema.safeParse({ username });
 
        // Handle validation errors
        if (!result.success) {
@@ -41,16 +27,15 @@ export async function GET(req: Request) {
                    success: false,
                    message: usernameError?.length > 0
                        ? usernameError.join(', ')
-                       : 'Invalid query parameters',
+                       : 'Invalid username',
                },
                { status: 400 }
            );
        }
 
        // Check if username already exists in verified users
-       const { username } = result.data;
        const existingVerifiedUser = await Usermodel.findOne({
-           username,
+           username: result.data.username,
            isVerified: true,
        });
 
@@ -75,12 +60,12 @@ export async function GET(req: Request) {
 
    } catch (error) {
        // Handle any unexpected errors
-       console.log("Error checking username", error);
+       console.error("Error checking username", error);
        return Response.json({
            message: "Error checking username",
            success: false
        }, {
            status: 500
-       })
+       });
    }
 }

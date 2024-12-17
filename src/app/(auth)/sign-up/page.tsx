@@ -30,7 +30,7 @@ const page = () => {
   const [isCheckingUsername, setIsCheckingUsername] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   // for the debouncing 
-  const debounced = useDebounceValue(setUsername, 300);
+  const debounced = useDebounceValue(username, 300);
   const {toast} = useToast();
   const route = useRouter();
   // zod impelmtation
@@ -80,11 +80,10 @@ const page = () => {
       });
 
       route.replace(`/verify/${username}`);
-
       setIsSubmitting(false);
     } catch (error) {
       console.error('Error during sign-up:', error);
-
+// errro using the axios 
       const axiosError = error as AxiosError<apiResponse>;
 
       // Default error message
@@ -123,7 +122,7 @@ const page = () => {
                     {...field}
                     onChange={(e) => {
                       field.onChange(e)
-                      debounced(e.target.value);
+                      setUsername(e.target.value);
                     }}
                   />
                   {isCheckingUsername && <Loader2 className="animate-spin" />}
