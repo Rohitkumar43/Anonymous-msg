@@ -1,0 +1,420 @@
+
+
+
+        /* Main container styling */
+        .container-fluid {
+            background-color: #f8f9fa;
+            padding: 20px;
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Sidebar and main content layout */
+        .row {
+            display: flex;
+            gap: 20px;
+        }
+
+        /* Main content card styling */
+        .main-content {
+            margin-top: -250px;
+            background-color: #ffffff;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Breadcrumb styling */
+        .breadcrumb {
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 10px 15px;
+            font-size: 14px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .breadcrumb a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .breadcrumb-item.active {
+            color: #6c757d;
+            font-weight: bold;
+        }
+
+        /* Add expenses button styling */
+        .btn-add-expense {
+            background-color: #28a745;
+            color: #ffffff;
+            font-size: 16px;
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: all 0.3s ease-in-out;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .btn-add-expense:hover {
+            background-color: #218838;
+            transform: scale(1.05);
+        }
+
+        .btn-add-expense:focus {
+            outline: none;
+            box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.5);
+        }
+
+        /* Improve overall text and spacing */
+        h1 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #343a40;
+        }
+
+        .content-description {
+            font-size: 16px;
+            color: #6c757d;
+            margin-bottom: 20px;
+        }
+
+        /* Table styling */
+        .container table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        .table-striped {
+            background-color: #ffffff;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .table-striped thead {
+            background-color: #007bff;
+            color: #ffffff;
+        }
+
+        .table-striped th,
+        .table-striped td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .table-striped tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .table-striped tbody tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        .table-hover {
+            cursor: pointer;
+        }
+
+        th {
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+
+        td {
+            font-size: 14px;
+            color: #343a40;
+        }
+
+        /* Search Form Styling */
+.search-form {
+    margin-right: 15px;
+}
+
+.search-form .input-group {
+    max-width: 300px;
+}
+
+.search-form .form-control {
+    border-radius: 5px 0 0 5px;
+    border-right: none;
+    padding: 8px;
+}
+
+.search-form .btn {
+    border-radius: 0 5px 5px 0;
+}
+
+/* Add Expense Button Styling */
+.btn-add-expense {
+    background-color: #007bff;
+    color: #ffffff;
+    border-radius: 5px;
+    padding: 8px 20px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease-in-out;
+}
+
+.btn-add-expense:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+/* Align content properly */
+.d-flex.align-items-center {
+    gap: 10px;
+}
+
+/* Breadcrumb margin adjustment */
+.breadcrumb {
+    margin-bottom: 20px;
+}
+
+/* General Button Styling */
+/* Base styles for export buttons */
+/* Base styles for export buttons */
+.btn-export {
+  font-size: 16px;
+  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: 8px; /* Slightly more rounded corners for a modern look */
+  transition: all 0.3s ease;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border: 2px solid transparent; /* Border for focus state */
+  text-transform: uppercase; /* Makes button text more prominent */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+/* Hover effect */
+.btn-export:hover {
+  transform: translateY(-3px); /* Slight lift effect */
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); /* Deeper shadow on hover */
+}
+
+/* CSV button style */
+.btn-export.csv {
+  background-color: #4CAF50; /* Green */
+  color: white;
+  border: 2px solid #4CAF50;
+}
+
+.btn-export.csv:hover {
+  background-color: #45a049; /* Darker green */
+  border-color: #388e3c;
+}
+
+/* PDF button style */
+.btn-export.pdf {
+  background-color: #E64A19; /* Red */
+  color: white;
+  border: 2px solid #E64A19;
+}
+
+.btn-export.pdf:hover {
+  background-color: #D32F2F; /* Darker red */
+  border-color: #C62828;
+}
+
+/* Focus state */
+.btn-export:focus {
+  outline: none;
+  border-color: #1976D2; /* Blue outline for focus */
+  box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.3); /* Subtle focus halo */
+}
+
+/* Active state - Pressed effect */
+.btn-export:active {
+  transform: translateY(1px); /* Slight press down effect */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15); /* Lighter shadow when pressed */
+}
+
+/* Focus-visible for better accessibility */
+.btn-export:focus-visible {
+  outline: 3px solid #1976D2; /* More prominent outline for focus */
+}
+
+/* Extra small screen sizes (mobile-first design) */
+@media (max-width: 576px) {
+  .btn-export {
+    font-size: 14px;
+    padding: 10px 20px; /* Smaller padding on mobile */
+  }
+}
+.btn-action {
+    font-size: 16px;
+    font-weight: 600;
+    padding: 12px 28px;
+    border-radius: 10px; /* Rounder corners for a sleek look */
+    transition: all 0.3s ease;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border: none; /* No border for cleaner look */
+    text-transform: uppercase; /* Makes button text more prominent */
+    position: relative;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Soft shadow for depth */
+    margin-right: 10px; /* Add a gap between buttons */
+}
+
+/* Hover effect */
+.btn-action:hover {
+    transform: translateY(-4px); /* Slight lift effect */
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); /* Deeper shadow on hover */
+}
+
+/* Export Button */
+.btn-action.export {
+    background-color: #007bff; /* Blue color */
+    color: white;
+}
+
+.btn-action.export:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+.btn-action.export:before {
+    content: '📤'; /* Export icon */
+    font-size: 18px;
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Import Button */
+.btn-action.import {
+    background-color: #007bff; /* Blue color */
+    color: white;
+}
+
+.btn-action.import:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+.btn-action.import:before {
+    content: '📥'; /* Import icon */
+    font-size: 18px;
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Focus state for both buttons */
+.btn-action:focus {
+    outline: none;
+    border: none;
+    box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.3); /* Blue halo effect */
+}
+
+/* Active state - Pressed effect for both buttons */
+.btn-action:active {
+    transform: translateY(2px); /* Slight press down effect */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Light shadow when pressed */
+}
+
+/* Focus-visible for better accessibility */
+.btn-action:focus-visible {
+    outline: 3px solid #1976D2; /* Prominent blue outline on focus */
+}
+
+/* Extra small screen sizes (mobile-first design) */
+@media (max-width: 576px) {
+    .btn-action {
+        font-size: 14px;
+        padding: 10px 20px; /* Smaller padding on mobile */
+        width: 100%; /* Full width on mobile */
+        margin-top: 10px;
+    }
+}
+    /* General Button Styling for Export and Import */
+    .btn-action {
+        font-size: 16px;
+        font-weight: 600;
+        padding: 12px 28px;
+        border-radius: 10px; /* Rounder corners for a sleek look */
+        transition: all 0.3s ease;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        border: none; /* No border for cleaner look */
+        text-transform: uppercase; /* Makes button text more prominent */
+        position: relative;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Soft shadow for depth */
+        margin-right: 10px; /* Add a gap between buttons */
+    }
+
+    /* Hover effect */
+    .btn-action:hover {
+        transform: translateY(-4px); /* Slight lift effect */
+        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); /* Deeper shadow on hover */
+    }
+
+    /* Export Button */
+    .btn-action.export {
+        background-color: #007bff; /* Blue color */
+        color: white;
+    }
+
+    .btn-action.export:hover {
+        background-color: #0056b3; /* Darker blue on hover */
+    }
+
+    .btn-action.export:before {
+        content: '📤'; /* Export icon */
+        font-size: 18px;
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    /* Import Button */
+    .btn-action.import {
+        background-color: #007bff; /* Blue color */
+        color: white;
+    }
+
+    .btn-action.import:hover {
+        background-color: #0056b3; /* Darker blue on hover */
+    }
+
+    .btn-action.import:before {
+        content: '📥'; /* Import icon */
+        font-size: 18px;
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    /* Focus state for both buttons */
+    .btn-action:focus {
+        outline: none;
+        border: none;
+        box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.3); /* Blue halo effect */
+    }
+
+    /* Active state - Pressed effect for both buttons */
+    .btn-action:active {
+        transform: translateY(2px); /* Slight press down effect */
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Light shadow when pressed */
+    }
+
+    /* Focus-visible for better accessibility */
+    .btn-action:focus-visible {
+        outline: 3px solid #1976D2; /* Prominent blue outline on focus */
+    }
+
+    /* Extra small screen sizes (mobile-first design) */
+    @media (max-width: 576px) {
+        .btn-action {
+            font-size: 14px;
+            padding: 10px 20px; /* Smaller padding on mobile */
+            width: 100%; /* Full width on mobile */
+            margin-top: 10px;
+
